@@ -9,3 +9,9 @@ Playground by Goland With Restful Framework "Gin Web Framework" and His Merrie M
 - CORS
   - [gin-contrib/cors](https://github.com/gin-contrib/cors)
 
+
+# Maybe Next Time
+
+[GORM Guides | GORM - The fantastic ORM library for Golang, aims to be developer friendly.](https://gorm.io/docs/)
+
+[golang-jwt/jwt: Community maintained clone of https://github.com/dgrijalva/jwt-go](https://github.com/golang-jwt/jwt)
