@@ -3,11 +3,10 @@
     "info": {
         "contact": {}
     },
-    "basePath": "/api/v1",
     "paths": {
         "/ping": {
             "get": {
-                "description": "Doing ping",
+                "description": "Doing Ping",
                 "consumes": [
                     "application/json"
                 ],
@@ -20,7 +19,7 @@
                 "summary": "Ping example",
                 "responses": {
                     "200": {
-                        "description": "OK",
+                        "description": "{\"message\": \"pong\"}",
                         "schema": {
                             "type": "string"
                         }
@@ -30,7 +29,7 @@
         },
         "/ping2": {
             "get": {
-                "description": "Doing ping",
+                "description": "Doing Ping2",
                 "consumes": [
                     "application/json"
                 ],
@@ -43,7 +42,7 @@
                 "summary": "Ping2 example",
                 "responses": {
                     "200": {
-                        "description": "OK",
+                        "description": "{\"message\": \"pong2\"}",
                         "schema": {
                             "type": "string"
                         }
