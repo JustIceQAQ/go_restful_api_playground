@@ -1,0 +1,35 @@
+basePath: /api/v1
+info:
+  contact: {}
+paths:
+  /ping:
+    get:
+      consumes:
+      - application/json
+      description: Doing pingapp
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Ping example
+      tags:
+      - Ping
+  /ping2:
+    get:
+      consumes:
+      - application/json
+      description: Doing pingapp
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Ping2 example
+      tags:
+      - Ping2
+swagger: "2.0"
