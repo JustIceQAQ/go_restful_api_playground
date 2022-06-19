@@ -15,6 +15,7 @@ import (
 // @Produce json
 // @Success 200 {array} Models.User
 // @Router /users [get]
+// @Security BearerAuth
 func (h *Handler) UserList(c *gin.Context) {
 
 	var users []Models.User
@@ -35,6 +36,7 @@ func (h *Handler) UserList(c *gin.Context) {
 // @param id path int true "id"
 // @Success 200 {object} Models.User
 // @Router /user/{id} [get]
+// @Security BearerAuth
 func (h *Handler) UserRetrieve(c *gin.Context) {
 	id := c.Param("id")
 
@@ -62,6 +64,7 @@ type UserBody struct {
 // @Param UserBody body UserBody true "account password username"
 // @Success 200 {object} Models.User
 // @Router /users [post]
+// @Security BearerAuth
 func (h *Handler) UserCreate(c *gin.Context) {
 	var user Models.User
 	if err := c.BindJSON(&user); err != nil {
@@ -86,6 +89,7 @@ func (h *Handler) UserCreate(c *gin.Context) {
 // @Param UserBody body UserBody true "account password username"
 // @Success 200 {object} Models.User
 // @Router /user/{id} [put]
+// @Security BearerAuth
 func (h *Handler) UserUpdate(c *gin.Context) {
 	id := c.Param("id")
 	var existUser Models.User
@@ -118,6 +122,7 @@ func (h *Handler) UserUpdate(c *gin.Context) {
 // @param id path int true "id"
 // @Success 200 {object} Models.User
 // @Router /user/{id} [delete]
+// @Security BearerAuth
 func (h *Handler) UserDelete(c *gin.Context) {
 	id := c.Param("id")
 
