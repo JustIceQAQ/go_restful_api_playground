@@ -8,7 +8,9 @@ Playground by Goland With Restful Framework "Gin Web Framework" and His Merrie M
     - [swaggo/gin-swagger](https://github.com/swaggo/gin-swagger)
 - CORS
   - [gin-contrib/cors](https://github.com/gin-contrib/cors)
-
+- Deploy to Docker
+  -  [Golang - Official Image | Docker Hub](https://hub.docker.com/_/golang)
+  -  [Build your Go image | Docker Documentation](https://docs.docker.com/language/golang/build-images/#multi-stage-builds)
 
 # Maybe Next Time
 
