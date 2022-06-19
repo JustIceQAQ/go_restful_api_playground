@@ -42,6 +42,9 @@ func (h *Handler) UserRetrieve(c *gin.Context) {
 
 	var user Models.User
 	if result := h.db.First(&user, id); result.Error != nil {
+		c.JSON(http.StatusNotFound, gin.H{
+			"message": "Not Found this User by id",
+		})
 		return
 	}
 
@@ -71,6 +74,7 @@ func (h *Handler) UserCreate(c *gin.Context) {
 		return
 	}
 	if result := h.db.Create(&user); result.Error != nil {
+
 		return
 	}
 
