@@ -12,8 +12,15 @@ Playground by Goland With Restful Framework "Gin Web Framework" and His Merrie M
   -  [Golang - Official Image | Docker Hub](https://hub.docker.com/_/golang)
   -  [Build your Go image | Docker Documentation](https://docs.docker.com/language/golang/build-images/#multi-stage-builds)
 
+---
+
 # Maybe Next Time
 
 [GORM Guides | GORM - The fantastic ORM library for Golang, aims to be developer friendly.](https://gorm.io/docs/)
 
 [golang-jwt/jwt: Community maintained clone of https://github.com/dgrijalva/jwt-go](https://github.com/golang-jwt/jwt)
+
+---
+
+# 部屬前
+- `swag init --parseDependency --parseInternal`
