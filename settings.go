@@ -5,7 +5,7 @@ import (
 	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
-	"playground_api/docs"
+	"go_restful_api_playground/docs"
 )
 
 func setting(app *gin.Engine) {

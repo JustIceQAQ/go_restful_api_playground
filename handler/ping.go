@@ -1,4 +1,4 @@
-package pingapp
+package handler
 
 import (
 	"github.com/gin-gonic/gin"
@@ -14,7 +14,7 @@ import (
 // @Produce json
 // @Success 200 {string} json "{"message": "pong"}"
 // @Router /ping [get]
-func Ping(c *gin.Context) {
+func (h *Handler) Ping(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
 		"message": "pong",
 	})
@@ -29,7 +29,7 @@ func Ping(c *gin.Context) {
 // @Produce json
 // @Success 200 {string} json "{"message": "pong2"}"
 // @Router /ping2 [get]
-func Ping2(c *gin.Context) {
+func (h *Handler) Ping2(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
 		"message": "pong2",
 	})
