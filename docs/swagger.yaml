@@ -7,6 +7,15 @@ definitions:
         description: Valid is true if Time is not NULL
         type: boolean
     type: object
+  handler.UserBody:
+    properties:
+      account:
+        type: string
+      password:
+        type: string
+      username:
+        type: string
+    type: object
   models.User:
     properties:
       account:
@@ -42,26 +51,31 @@ paths:
       summary: Ping example
       tags:
       - Ping
-  /ping2:
-    get:
+  /user/{id}:
+    delete:
       consumes:
       - application/json
-      description: Doing Ping2
+      description: Delete User
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: integer
       produces:
       - application/json
       responses:
         "200":
-          description: '{"message": "pong2"}'
+          description: OK
           schema:
-            type: string
-      summary: Ping2 example
+            $ref: '#/definitions/models.User'
+      summary: Delete User
       tags:
-      - Ping2
-  /user/{id}:
+      - User
     get:
       consumes:
       - application/json
-      description: GET One User
+      description: GET User
       parameters:
       - description: id
         in: path
@@ -78,11 +92,37 @@ paths:
       summary: Retrieve User
       tags:
       - User
+    put:
+      consumes:
+      - application/json
+      description: Update User
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: account password username
+        in: body
+        name: UserBody
+        required: true
+        schema:
+          $ref: '#/definitions/handler.UserBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.User'
+      summary: Update User
+      tags:
+      - User
   /users:
     get:
       consumes:
       - application/json
-      description: GET All Users
+      description: GET Users
       produces:
       - application/json
       responses:
@@ -93,6 +133,27 @@ paths:
               $ref: '#/definitions/models.User'
             type: array
       summary: List User
+      tags:
+      - User
+    post:
+      consumes:
+      - application/json
+      description: POST User
+      parameters:
+      - description: account password username
+        in: body
+        name: UserBody
+        required: true
+        schema:
+          $ref: '#/definitions/handler.UserBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.User'
+      summary: Create User
       tags:
       - User
 swagger: "2.0"
