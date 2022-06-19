@@ -10,8 +10,6 @@ import (
 
 func setting(app *gin.Engine) {
 
-	// Swagger
-	// @BasePath /api/v1
 	docs.SwaggerInfo.BasePath = "/api/v1"
 	app.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
