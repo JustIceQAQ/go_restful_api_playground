@@ -5,20 +5,29 @@ import (
 )
 
 func Routes(superRoute *gin.RouterGroup, handler *Handler) {
+	PingRouter(superRoute, handler)
+	UsersRouter(superRoute, handler)
+}
+
+// Ping API
+func PingRouter(superRoute *gin.RouterGroup, handler *Handler) {
 	pingRouter := superRoute.Group("/ping")
 	{
 		pingRouter.GET("/", handler.Ping)
 	}
-	ping2Router := superRoute.Group("/ping2")
-	{
-		ping2Router.GET("/", handler.Ping2)
-	}
+}
+
+// User API
+func UsersRouter(superRoute *gin.RouterGroup, handler *Handler) {
 	usersRouter := superRoute.Group("/users")
 	{
 		usersRouter.GET("/", handler.UserList)
+		usersRouter.POST("/", handler.UserCreate)
 	}
 	userRouter := superRoute.Group("/user")
 	{
 		userRouter.GET("/:id", handler.UserRetrieve)
+		userRouter.PUT("/:id", handler.UserUpdate)
+		userRouter.DELETE("/:id", handler.UserDelete)
 	}
 }
