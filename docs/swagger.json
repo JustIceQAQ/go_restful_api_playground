@@ -1,9 +1,46 @@
 {
     "swagger": "2.0",
     "info": {
-        "contact": {}
+        "title": "Demo GO Restful API",
+        "contact": {},
+        "version": "0.0.1"
     },
+    "basePath": "/api/v1",
     "paths": {
+        "/jwt/get_token": {
+            "post": {
+                "description": "Get Jwt Token",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Jwt"
+                ],
+                "summary": "Get Jwt Token",
+                "parameters": [
+                    {
+                        "description": "account password",
+                        "name": "LoginUserBody",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/handler.LoginUserBody"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.User"
+                        }
+                    }
+                }
+            }
+        },
         "/ping": {
             "get": {
                 "description": "Doing Ping",
@@ -29,6 +66,11 @@
         },
         "/user/{id}": {
             "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "GET User",
                 "consumes": [
                     "application/json"
@@ -59,6 +101,11 @@
                 }
             },
             "put": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Update User",
                 "consumes": [
                     "application/json"
@@ -98,6 +145,11 @@
                 }
             },
             "delete": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Delete User",
                 "consumes": [
                     "application/json"
@@ -130,6 +182,11 @@
         },
         "/users": {
             "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "GET Users",
                 "consumes": [
                     "application/json"
@@ -154,6 +211,11 @@
                 }
             },
             "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "POST User",
                 "consumes": [
                     "application/json"
@@ -200,6 +262,17 @@
                 }
             }
         },
+        "handler.LoginUserBody": {
+            "type": "object",
+            "properties": {
+                "account": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                }
+            }
+        },
         "handler.UserBody": {
             "type": "object",
             "properties": {
@@ -239,6 +312,13 @@
                     "type": "string"
                 }
             }
+        }
+    },
+    "securityDefinitions": {
+        "BearerAuth": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
         }
     }
 }

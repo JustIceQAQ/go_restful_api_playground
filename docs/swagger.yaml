@@ -1,3 +1,4 @@
+basePath: /api/v1
 definitions:
   gorm.DeletedAt:
     properties:
@@ -6,6 +7,13 @@ definitions:
       valid:
         description: Valid is true if Time is not NULL
         type: boolean
+    type: object
+  handler.LoginUserBody:
+    properties:
+      account:
+        type: string
+      password:
+        type: string
     type: object
   handler.UserBody:
     properties:
@@ -35,7 +43,31 @@ definitions:
     type: object
 info:
   contact: {}
+  title: Demo GO Restful API
+  version: 0.0.1
 paths:
+  /jwt/get_token:
+    post:
+      consumes:
+      - application/json
+      description: Get Jwt Token
+      parameters:
+      - description: account password
+        in: body
+        name: LoginUserBody
+        required: true
+        schema:
+          $ref: '#/definitions/handler.LoginUserBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.User'
+      summary: Get Jwt Token
+      tags:
+      - Jwt
   /ping:
     get:
       consumes:
@@ -69,6 +101,8 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/models.User'
+      security:
+      - BearerAuth: []
       summary: Delete User
       tags:
       - User
@@ -89,6 +123,8 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/models.User'
+      security:
+      - BearerAuth: []
       summary: Retrieve User
       tags:
       - User
@@ -115,6 +151,8 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/models.User'
+      security:
+      - BearerAuth: []
       summary: Update User
       tags:
       - User
@@ -132,6 +170,8 @@ paths:
             items:
               $ref: '#/definitions/models.User'
             type: array
+      security:
+      - BearerAuth: []
       summary: List User
       tags:
       - User
@@ -153,7 +193,14 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/models.User'
+      security:
+      - BearerAuth: []
       summary: Create User
       tags:
       - User
+securityDefinitions:
+  BearerAuth:
+    in: header
+    name: Authorization
+    type: apiKey
 swagger: "2.0"
