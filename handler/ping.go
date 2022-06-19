@@ -19,18 +19,3 @@ func (h *Handler) Ping(c *gin.Context) {
 		"message": "pong",
 	})
 }
-
-// PingApp godoc
-// @Summary Ping2 example
-// @Schemes
-// @Description Doing Ping2
-// @Tags Ping2
-// @Accept json
-// @Produce json
-// @Success 200 {string} json "{"message": "pong2"}"
-// @Router /ping2 [get]
-func (h *Handler) Ping2(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{
-		"message": "pong2",
-	})
-}
