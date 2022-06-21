@@ -1,12 +1,14 @@
 package handler
 
 import (
+	"errors"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v4"
 	Models "go_restful_api_playground/models"
 	Utils "go_restful_api_playground/utils"
 	"net/http"
+	"strings"
 	"time"
 )
 
@@ -59,11 +61,32 @@ func (h *Handler) JwtRetrieve(c *gin.Context) {
 
 }
 
+// JwtApp godoc
+// @Summary Captcha Jwt Token
+// @Schemes
+// @Description Captcha Jwt Token
+// @Tags Jwt
+// @Accept json
+// @Produce json
+// @Success 200 {string} json "{"now": "testing..."}"
+// @Router /jwt/captcha [get]
+// @Security BearerAuth
+func (h *Handler) JwtCaptcha(c *gin.Context) {
+	tokenString, _ := getToken(c)
+	isOk, err, tokenDetail := ValidateToken(tokenString, true)
+	fmt.Println(isOk, err, tokenDetail)
+	c.JSON(http.StatusOK, gin.H{
+		"Captcha": tokenDetail,
+	})
+
+}
+
+type CustomClaims struct {
+	Account string `json:"account"`
+	jwt.RegisteredClaims
+}
+
 func GenerateToken(user Models.User) (string, error) {
-	type CustomClaims struct {
-		Account string `json:"account"`
-		jwt.RegisteredClaims
-	}
 
 	claims := CustomClaims{
 		user.Account, jwt.RegisteredClaims{
@@ -78,7 +101,62 @@ func GenerateToken(user Models.User) (string, error) {
 	}
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	ss, err := token.SignedString(jwtKey)
-	fmt.Printf("%v %v", ss, err)
 	return ss, err
 
+}
+
+func VerifyToken(c *gin.Context) {
+	token, ok := getToken(c)
+	if !ok {
+		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{})
+		return
+	}
+	result, err, _ := ValidateToken(token, false)
+	if err != nil {
+		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{})
+		return
+	}
+	if result {
+		c.Next()
+	}
+}
+
+func ValidateToken(tokenString string, isTokenDetail bool) (bool, error, map[string]interface{}) {
+
+	var claims CustomClaims
+	token, err := jwt.ParseWithClaims(tokenString, &claims, func(token *jwt.Token) (interface{}, error) {
+		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+			return nil, fmt.Errorf("unexpected signing method: %v", token.Header["alg"])
+		}
+		return jwtKey, nil
+	})
+	if err != nil {
+		return false, err, nil
+	}
+	if !token.Valid {
+		return false, errors.New("invalid token"), nil
+	}
+	if isTokenDetail {
+		dict := map[string]interface{}{
+			"token":   token,
+			"account": claims.Account,
+		}
+		return true, nil, dict
+	} else {
+		return true, nil, nil
+	}
+
+}
+
+func getToken(c *gin.Context) (string, bool) {
+	authValue := c.GetHeader("Authorization")
+	arr := strings.Split(authValue, " ")
+	if len(arr) != 2 {
+		return "", false
+	}
+	authType := strings.Trim(arr[0], "\n\r\t")
+	if strings.ToLower(authType) != strings.ToLower("Bearer") {
+		return "", false
+	}
+	return strings.Trim(arr[1], "\n\t\r"), true
 }
