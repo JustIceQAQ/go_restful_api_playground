@@ -137,6 +137,29 @@ paths:
       summary: Ping example
       tags:
       - Ping
+  /upload:
+    post:
+      consumes:
+      - multipart/form-data
+      description: Create Upload File
+      parameters:
+      - description: file
+        in: formData
+        name: file
+        required: true
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"message": "Your Upload Success"}'
+          schema:
+            type: string
+      security:
+      - BearerAuth: []
+      summary: Create Upload File
+      tags:
+      - Upload
   /user/{id}:
     delete:
       consumes:

@@ -8,8 +8,8 @@ import (
 func Routes(superRoute *gin.RouterGroup) {
 	JwtRouter(superRoute)
 	PingRouter(superRoute)
-
 	UsersRouter(superRoute)
+	UploadsRouter(superRoute)
 }
 
 // Jwt API
@@ -47,5 +47,15 @@ func UsersRouter(superRoute *gin.RouterGroup) {
 		userRouter.GET("/:id", v1.UserRetrieve)
 		userRouter.PUT("/:id", v1.UserUpdate)
 		userRouter.DELETE("/:id", v1.UserDelete)
+	}
+}
+
+// Uploads API
+func UploadsRouter(superRoute *gin.RouterGroup) {
+	// uploadsRouter.Use(v1.VerifyToken)
+
+	uploadsRouter := superRoute.Group("/upload")
+	{
+		uploadsRouter.POST("/", v1.UploadFile)
 	}
 }
