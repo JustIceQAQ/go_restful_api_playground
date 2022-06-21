@@ -74,7 +74,7 @@ func JwtRetrieve(c *gin.Context) {
 // @Tags Jwt
 // @Accept json
 // @Produce json
-// @Success 200 {string} json "{"now": "testing..."}"
+// @Success 200 {object} CustomClaims
 // @Router /jwt/captcha [get]
 // @Security BearerAuth
 func JwtCaptcha(c *gin.Context) {

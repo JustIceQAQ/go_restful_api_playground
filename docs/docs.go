@@ -36,9 +36,9 @@ const docTemplate = `{
                 "summary": "Captcha Jwt Token",
                 "responses": {
                     "200": {
-                        "description": "{\"now\": \"testing...\"}",
+                        "description": "OK",
                         "schema": {
-                            "type": "string"
+                            "$ref": "#/definitions/v1.CustomClaims"
                         }
                     }
                 }
@@ -64,7 +64,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/handler.LoginUserBody"
+                            "$ref": "#/definitions/v1.LoginUserBody"
                         }
                     }
                 ],
@@ -168,7 +168,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/handler.UserBody"
+                            "$ref": "#/definitions/v1.UserBody"
                         }
                     }
                 ],
@@ -271,7 +271,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/handler.UserBody"
+                            "$ref": "#/definitions/v1.UserBody"
                         }
                     }
                 ],
@@ -299,27 +299,10 @@ const docTemplate = `{
                 }
             }
         },
-        "handler.LoginUserBody": {
+        "jwt.NumericDate": {
             "type": "object",
             "properties": {
-                "account": {
-                    "type": "string"
-                },
-                "password": {
-                    "type": "string"
-                }
-            }
-        },
-        "handler.UserBody": {
-            "type": "object",
-            "properties": {
-                "account": {
-                    "type": "string"
-                },
-                "password": {
-                    "type": "string"
-                },
-                "username": {
+                "time.Time": {
                     "type": "string"
                 }
             }
@@ -343,6 +326,76 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "updatedAt": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
+                }
+            }
+        },
+        "v1.CustomClaims": {
+            "type": "object",
+            "properties": {
+                "account": {
+                    "type": "string"
+                },
+                "aud": {
+                    "description": "the ` + "`" + `aud` + "`" + ` (Audience) claim. See https://datatracker.ietf.org/doc/html/rfc7519#section-4.1.3",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "exp": {
+                    "description": "the ` + "`" + `exp` + "`" + ` (Expiration Time) claim. See https://datatracker.ietf.org/doc/html/rfc7519#section-4.1.4",
+                    "$ref": "#/definitions/jwt.NumericDate"
+                },
+                "iat": {
+                    "description": "the ` + "`" + `iat` + "`" + ` (Issued At) claim. See https://datatracker.ietf.org/doc/html/rfc7519#section-4.1.6",
+                    "$ref": "#/definitions/jwt.NumericDate"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "iss": {
+                    "description": "the ` + "`" + `iss` + "`" + ` (Issuer) claim. See https://datatracker.ietf.org/doc/html/rfc7519#section-4.1.1",
+                    "type": "string"
+                },
+                "jti": {
+                    "description": "the ` + "`" + `jti` + "`" + ` (JWT ID) claim. See https://datatracker.ietf.org/doc/html/rfc7519#section-4.1.7",
+                    "type": "string"
+                },
+                "nbf": {
+                    "description": "the ` + "`" + `nbf` + "`" + ` (Not Before) claim. See https://datatracker.ietf.org/doc/html/rfc7519#section-4.1.5",
+                    "$ref": "#/definitions/jwt.NumericDate"
+                },
+                "sub": {
+                    "description": "the ` + "`" + `sub` + "`" + ` (Subject) claim. See https://datatracker.ietf.org/doc/html/rfc7519#section-4.1.2",
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
+                }
+            }
+        },
+        "v1.LoginUserBody": {
+            "type": "object",
+            "properties": {
+                "account": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                }
+            }
+        },
+        "v1.UserBody": {
+            "type": "object",
+            "properties": {
+                "account": {
+                    "type": "string"
+                },
+                "password": {
                     "type": "string"
                 },
                 "username": {
