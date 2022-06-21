@@ -20,7 +20,6 @@ func main() {
 	r := setupRouter()
 	setting(r)
 
-	migrate()
 	// Demo Process
 	DemoProcess()
 
@@ -28,13 +27,12 @@ func main() {
 	if err := r.Run(); err != nil {
 		fmt.Printf("startup service failed, err:%v\n\n", err)
 	}
+
 }
 
 func DemoProcess() {
 	demoUser1Password, _ := utils.HashingPassword("admin")
-
-	_, _ = models.User.Insert(models.User{}, "admin", demoUser1Password, "admin")
-
+	_, _ = models.User.Insert(models.User{}, "admin", demoUser1Password, "管理者")
 	demoUser2Password, _ := utils.HashingPassword("admin2")
-	_, _ = models.User.Insert(models.User{}, "admin2", demoUser2Password, "admin2")
+	_, _ = models.User.Insert(models.User{}, "admin2", demoUser2Password, "管理者2")
 }

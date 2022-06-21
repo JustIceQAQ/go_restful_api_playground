@@ -16,4 +16,7 @@ func setting(app *gin.Engine) {
 	// CORS
 	app.Use(cors.Default())
 
+	// DB migrate
+	migrate()
+
 }
