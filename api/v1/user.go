@@ -125,7 +125,7 @@ func UserUpdate(c *gin.Context) {
 // @Accept json
 // @Produce json
 // @param id path int true "id"
-// @Success 200 {object} Models.User
+// @Success 200 {string} string ""
 // @Router /user/{id} [delete]
 // @Security BearerAuth
 func UserDelete(c *gin.Context) {

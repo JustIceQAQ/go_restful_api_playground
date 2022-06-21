@@ -8,20 +8,9 @@ definitions:
         description: Valid is true if Time is not NULL
         type: boolean
     type: object
-  handler.LoginUserBody:
+  jwt.NumericDate:
     properties:
-      account:
-        type: string
-      password:
-        type: string
-    type: object
-  handler.UserBody:
-    properties:
-      account:
-        type: string
-      password:
-        type: string
-      username:
+      time.Time:
         type: string
     type: object
   models.User:
@@ -41,6 +30,54 @@ definitions:
       username:
         type: string
     type: object
+  v1.CustomClaims:
+    properties:
+      account:
+        type: string
+      aud:
+        description: the `aud` (Audience) claim. See https://datatracker.ietf.org/doc/html/rfc7519#section-4.1.3
+        items:
+          type: string
+        type: array
+      exp:
+        $ref: '#/definitions/jwt.NumericDate'
+        description: the `exp` (Expiration Time) claim. See https://datatracker.ietf.org/doc/html/rfc7519#section-4.1.4
+      iat:
+        $ref: '#/definitions/jwt.NumericDate'
+        description: the `iat` (Issued At) claim. See https://datatracker.ietf.org/doc/html/rfc7519#section-4.1.6
+      id:
+        type: integer
+      iss:
+        description: the `iss` (Issuer) claim. See https://datatracker.ietf.org/doc/html/rfc7519#section-4.1.1
+        type: string
+      jti:
+        description: the `jti` (JWT ID) claim. See https://datatracker.ietf.org/doc/html/rfc7519#section-4.1.7
+        type: string
+      nbf:
+        $ref: '#/definitions/jwt.NumericDate'
+        description: the `nbf` (Not Before) claim. See https://datatracker.ietf.org/doc/html/rfc7519#section-4.1.5
+      sub:
+        description: the `sub` (Subject) claim. See https://datatracker.ietf.org/doc/html/rfc7519#section-4.1.2
+        type: string
+      username:
+        type: string
+    type: object
+  v1.LoginUserBody:
+    properties:
+      account:
+        type: string
+      password:
+        type: string
+    type: object
+  v1.UserBody:
+    properties:
+      account:
+        type: string
+      password:
+        type: string
+      username:
+        type: string
+    type: object
 info:
   contact: {}
   title: Demo GO Restful API
@@ -55,9 +92,9 @@ paths:
       - application/json
       responses:
         "200":
-          description: '{"now": "testing..."}'
+          description: OK
           schema:
-            type: string
+            $ref: '#/definitions/v1.CustomClaims'
       security:
       - BearerAuth: []
       summary: Captcha Jwt Token
@@ -74,14 +111,14 @@ paths:
         name: LoginUserBody
         required: true
         schema:
-          $ref: '#/definitions/handler.LoginUserBody'
+          $ref: '#/definitions/v1.LoginUserBody'
       produces:
       - application/json
       responses:
         "200":
-          description: OK
+          description: '{"token": "token"}'
           schema:
-            $ref: '#/definitions/models.User'
+            type: string
       summary: Get Jwt Token
       tags:
       - Jwt
@@ -117,7 +154,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.User'
+            type: string
       security:
       - BearerAuth: []
       summary: Delete User
@@ -160,7 +197,7 @@ paths:
         name: UserBody
         required: true
         schema:
-          $ref: '#/definitions/handler.UserBody'
+          $ref: '#/definitions/v1.UserBody'
       produces:
       - application/json
       responses:
@@ -202,7 +239,7 @@ paths:
         name: UserBody
         required: true
         schema:
-          $ref: '#/definitions/handler.UserBody'
+          $ref: '#/definitions/v1.UserBody'
       produces:
       - application/json
       responses:

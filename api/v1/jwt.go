@@ -33,7 +33,7 @@ type UserInfoBody struct {
 // @Accept json
 // @Produce json
 // @Param LoginUserBody body LoginUserBody true "account password"
-// @Success 200 {object} Models.User
+// @Success 200 {string} json "{"token": "token"}"
 // @Router /jwt/get_token [post]
 func JwtRetrieve(c *gin.Context) {
 
@@ -74,7 +74,7 @@ func JwtRetrieve(c *gin.Context) {
 // @Tags Jwt
 // @Accept json
 // @Produce json
-// @Success 200 {string} json "{"now": "testing..."}"
+// @Success 200 {object} CustomClaims
 // @Router /jwt/captcha [get]
 // @Security BearerAuth
 func JwtCaptcha(c *gin.Context) {
