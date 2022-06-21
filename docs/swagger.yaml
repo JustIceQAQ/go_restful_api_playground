@@ -46,6 +46,23 @@ info:
   title: Demo GO Restful API
   version: 0.0.1
 paths:
+  /jwt/captcha:
+    get:
+      consumes:
+      - application/json
+      description: Captcha Jwt Token
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"now": "testing..."}'
+          schema:
+            type: string
+      security:
+      - BearerAuth: []
+      summary: Captcha Jwt Token
+      tags:
+      - Jwt
   /jwt/get_token:
     post:
       consumes:
