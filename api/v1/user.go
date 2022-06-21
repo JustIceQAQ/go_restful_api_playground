@@ -20,7 +20,7 @@ import (
 func UserList(c *gin.Context) {
 
 	var users []Models.User
-	if result := orm.Db.Preload("PersonalInformation").Find(&users); result.Error != nil {
+	if result := orm.Db.Preload("PersonalInformation").Preload("File").Find(&users); result.Error != nil {
 		return
 	}
 

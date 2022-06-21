@@ -344,9 +344,35 @@ const docTemplate = `{
                 }
             }
         },
+        "models.File": {
+            "type": "object",
+            "properties": {
+                "createdAt": {
+                    "type": "string"
+                },
+                "deletedAt": {
+                    "$ref": "#/definitions/gorm.DeletedAt"
+                },
+                "filename": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "updatedAt": {
+                    "type": "string"
+                },
+                "userid": {
+                    "type": "integer"
+                }
+            }
+        },
         "models.PersonalInformation": {
             "type": "object",
             "properties": {
+                "age": {
+                    "type": "integer"
+                },
                 "createdAt": {
                     "type": "string"
                 },
@@ -356,8 +382,14 @@ const docTemplate = `{
                 "id": {
                     "type": "integer"
                 },
+                "sex": {
+                    "type": "integer"
+                },
                 "updatedAt": {
                     "type": "string"
+                },
+                "userid": {
+                    "type": "integer"
                 }
             }
         },
@@ -373,13 +405,19 @@ const docTemplate = `{
                 "deletedAt": {
                     "$ref": "#/definitions/gorm.DeletedAt"
                 },
+                "files": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.File"
+                    }
+                },
                 "id": {
                     "type": "integer"
                 },
                 "password": {
                     "type": "string"
                 },
-                "personalInformation": {
+                "personal_information": {
                     "$ref": "#/definitions/models.PersonalInformation"
                 },
                 "updatedAt": {

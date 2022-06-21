@@ -93,6 +93,20 @@ func JwtCaptcha(c *gin.Context) {
 
 }
 
+func GetUser(c *gin.Context) interface{} {
+	tokenString, _ := getToken(c)
+	isOk, _, tokenDetail := ValidateToken(tokenString, true)
+
+	if !isOk {
+		c.JSON(http.StatusUnauthorized, gin.H{
+			"value": http.StatusText(http.StatusUnauthorized),
+		})
+		return nil
+	}
+	return tokenDetail["user-info"]
+
+}
+
 type CustomClaims struct {
 	UserInfoBody
 	jwt.RegisteredClaims

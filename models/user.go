@@ -10,13 +10,15 @@ type User struct {
 	Account             string              `json:"account"`
 	Password            string              `json:"password"`
 	Username            string              `json:"username"`
-	PersonalInformation PersonalInformation `gorm:"foreignKey:ID"`
+	PersonalInformation PersonalInformation `gorm:"foreignKey:UserId" json:"personal_information"`
+	File                []File              `gorm:"foreignKey:UserId" json:"files"`
 }
 
 type PersonalInformation struct {
 	gorm.Model
-	Age uint8 `json:"age"`
-	Sex uint8 `json:"sex"`
+	UserId uint  `json:"userid"`
+	Age    uint8 `json:"age"`
+	Sex    uint8 `json:"sex"`
 }
 
 func (User) Insert(account string, password string, username string) (*User, error) {

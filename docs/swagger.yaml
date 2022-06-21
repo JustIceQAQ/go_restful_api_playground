@@ -13,16 +13,37 @@ definitions:
       time.Time:
         type: string
     type: object
+  models.File:
+    properties:
+      createdAt:
+        type: string
+      deletedAt:
+        $ref: '#/definitions/gorm.DeletedAt'
+      filename:
+        type: string
+      id:
+        type: integer
+      updatedAt:
+        type: string
+      userid:
+        type: integer
+    type: object
   models.PersonalInformation:
     properties:
+      age:
+        type: integer
       createdAt:
         type: string
       deletedAt:
         $ref: '#/definitions/gorm.DeletedAt'
       id:
         type: integer
+      sex:
+        type: integer
       updatedAt:
         type: string
+      userid:
+        type: integer
     type: object
   models.User:
     properties:
@@ -32,11 +53,15 @@ definitions:
         type: string
       deletedAt:
         $ref: '#/definitions/gorm.DeletedAt'
+      files:
+        items:
+          $ref: '#/definitions/models.File'
+        type: array
       id:
         type: integer
       password:
         type: string
-      personalInformation:
+      personal_information:
         $ref: '#/definitions/models.PersonalInformation'
       updatedAt:
         type: string
