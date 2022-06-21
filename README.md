@@ -20,7 +20,7 @@ Playground by Goland With Restful Framework "Gin Web Framework" and His Merrie M
 
 # Maybe Next Time
 
-coming soon
+use Cloudinary (Deploy on Heroku 😥)
 
 ---
 
