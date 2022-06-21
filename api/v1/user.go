@@ -1,7 +1,8 @@
-package handler
+package v1
 
 import (
 	"github.com/gin-gonic/gin"
+	orm "go_restful_api_playground/database"
 	Models "go_restful_api_playground/models"
 	"net/http"
 )
@@ -16,10 +17,10 @@ import (
 // @Success 200 {array} Models.User
 // @Router /users [get]
 // @Security BearerAuth
-func (h *Handler) UserList(c *gin.Context) {
+func UserList(c *gin.Context) {
 
 	var users []Models.User
-	if result := h.db.Find(&users); result.Error != nil {
+	if result := orm.Db.Find(&users); result.Error != nil {
 		return
 	}
 
@@ -37,11 +38,11 @@ func (h *Handler) UserList(c *gin.Context) {
 // @Success 200 {object} Models.User
 // @Router /user/{id} [get]
 // @Security BearerAuth
-func (h *Handler) UserRetrieve(c *gin.Context) {
+func UserRetrieve(c *gin.Context) {
 	id := c.Param("id")
 
 	var user Models.User
-	if result := h.db.First(&user, id); result.Error != nil {
+	if result := orm.Db.First(&user, id); result.Error != nil {
 		c.JSON(http.StatusNotFound, gin.H{
 			"message": "Not Found this User by id",
 		})
@@ -68,12 +69,12 @@ type UserBody struct {
 // @Success 200 {object} Models.User
 // @Router /users [post]
 // @Security BearerAuth
-func (h *Handler) UserCreate(c *gin.Context) {
+func UserCreate(c *gin.Context) {
 	var user Models.User
 	if err := c.BindJSON(&user); err != nil {
 		return
 	}
-	if result := h.db.Create(&user); result.Error != nil {
+	if result := orm.Db.Create(&user); result.Error != nil {
 
 		return
 	}
@@ -94,10 +95,10 @@ func (h *Handler) UserCreate(c *gin.Context) {
 // @Success 200 {object} Models.User
 // @Router /user/{id} [put]
 // @Security BearerAuth
-func (h *Handler) UserUpdate(c *gin.Context) {
+func UserUpdate(c *gin.Context) {
 	id := c.Param("id")
 	var existUser Models.User
-	if result := h.db.First(&existUser, id); result.Error != nil {
+	if result := orm.Db.First(&existUser, id); result.Error != nil {
 		return
 	}
 
@@ -110,7 +111,7 @@ func (h *Handler) UserUpdate(c *gin.Context) {
 	existUser.Password = user.Password
 	existUser.Username = user.Username
 
-	h.db.Save(&existUser)
+	orm.Db.Save(&existUser)
 
 	c.JSON(http.StatusOK, &existUser)
 
@@ -127,10 +128,10 @@ func (h *Handler) UserUpdate(c *gin.Context) {
 // @Success 200 {object} Models.User
 // @Router /user/{id} [delete]
 // @Security BearerAuth
-func (h *Handler) UserDelete(c *gin.Context) {
+func UserDelete(c *gin.Context) {
 	id := c.Param("id")
 
-	if result := h.db.Delete(&Models.User{}, id); result.Error != nil {
+	if result := orm.Db.Delete(&Models.User{}, id); result.Error != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"error": result.Error.Error(),
 		})

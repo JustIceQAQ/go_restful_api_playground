@@ -1,10 +1,11 @@
-package handler
+package v1
 
 import (
 	"errors"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v4"
+	orm "go_restful_api_playground/database"
 	Models "go_restful_api_playground/models"
 	Utils "go_restful_api_playground/utils"
 	"net/http"
@@ -29,7 +30,7 @@ type LoginUserBody struct {
 // @Param LoginUserBody body LoginUserBody true "account password"
 // @Success 200 {object} Models.User
 // @Router /jwt/get_token [post]
-func (h *Handler) JwtRetrieve(c *gin.Context) {
+func JwtRetrieve(c *gin.Context) {
 
 	var user LoginUserBody
 	if err := c.BindJSON(&user); err != nil {
@@ -38,7 +39,7 @@ func (h *Handler) JwtRetrieve(c *gin.Context) {
 
 	var existUser Models.User
 
-	result := h.db.First(&existUser, "account = ?", user.Account)
+	result := orm.Db.First(&existUser, "account = ?", user.Account)
 
 	if result.Error != nil {
 		c.JSON(http.StatusNotFound, gin.H{
@@ -71,7 +72,7 @@ func (h *Handler) JwtRetrieve(c *gin.Context) {
 // @Success 200 {string} json "{"now": "testing..."}"
 // @Router /jwt/captcha [get]
 // @Security BearerAuth
-func (h *Handler) JwtCaptcha(c *gin.Context) {
+func JwtCaptcha(c *gin.Context) {
 	tokenString, _ := getToken(c)
 	isOk, err, tokenDetail := ValidateToken(tokenString, true)
 	fmt.Println(isOk, err, tokenDetail)

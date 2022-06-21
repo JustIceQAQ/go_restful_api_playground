@@ -1,6 +1,7 @@
 package models
 
 import (
+	orm "go_restful_api_playground/database"
 	"gorm.io/gorm"
 )
 
@@ -11,13 +12,14 @@ type User struct {
 	Username string `json:"username"`
 }
 
-func (User) Insert(account string, password string, username string, db *gorm.DB) (*User, error) {
+func (User) Insert(account string, password string, username string) (*User, error) {
 	user := User{
 		Account:  account,
 		Password: password,
 		Username: username,
 	}
-	if res := db.Create(&user); res.Error != nil {
+
+	if res := orm.Db.Create(&user); res.Error != nil {
 		return nil, res.Error
 	}
 	return &user, nil

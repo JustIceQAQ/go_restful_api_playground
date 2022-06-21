@@ -2,11 +2,9 @@ package main
 
 import (
 	"fmt"
-	handler "go_restful_api_playground/handler"
+	_ "go_restful_api_playground/database"
 	models "go_restful_api_playground/models"
 	utils "go_restful_api_playground/utils"
-	"gorm.io/driver/sqlite"
-	"gorm.io/gorm"
 )
 
 // Swagger
@@ -17,20 +15,12 @@ import (
 // @in header
 // @name Authorization
 
-var DB *gorm.DB
-
 func main() {
 
-	db, err := gorm.Open(sqlite.Open(":memory:"), &gorm.Config{})
-	if err != nil {
-		panic(err)
-	}
-	migrate(db)
-	handlers := handler.NewHandler(db)
-	DB = db
-	r := setupRouter(handlers)
+	r := setupRouter()
 	setting(r)
 
+	migrate()
 	// Demo Process
 	DemoProcess()
 
@@ -43,8 +33,8 @@ func main() {
 func DemoProcess() {
 	demoUser1Password, _ := utils.HashingPassword("admin")
 
-	_, _ = models.User.Insert(models.User{}, "admin", demoUser1Password, "admin", DB)
+	_, _ = models.User.Insert(models.User{}, "admin", demoUser1Password, "admin")
 
 	demoUser2Password, _ := utils.HashingPassword("admin2")
-	_, _ = models.User.Insert(models.User{}, "admin2", demoUser2Password, "admin2", DB)
+	_, _ = models.User.Insert(models.User{}, "admin2", demoUser2Password, "admin2")
 }

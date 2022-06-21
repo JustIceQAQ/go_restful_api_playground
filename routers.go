@@ -2,17 +2,16 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
-	handler "go_restful_api_playground/handler"
 )
 
-func setupRouter(handlers *handler.Handler) *gin.Engine {
+func setupRouter() *gin.Engine {
 	r := gin.Default()
 	v1 := r.Group("/api/v1")
-	AddRoutes(v1, handlers)
+	AddRoutes(v1)
 
 	return r
 }
 
-func AddRoutes(superRoute *gin.RouterGroup, handlers *handler.Handler) {
-	handler.Routes(superRoute, handlers)
+func AddRoutes(superRoute *gin.RouterGroup) {
+	Routes(superRoute)
 }
