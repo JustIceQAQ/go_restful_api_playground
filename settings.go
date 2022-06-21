@@ -19,4 +19,7 @@ func setting(app *gin.Engine) {
 	// DB migrate
 	migrate()
 
+	// static path
+	app.Static("/media", "./media")
+
 }
