@@ -1,6 +1,10 @@
-# Playground by Goland
+# Playground by Golang
 
-Playground by Goland With Restful Framework "Gin Web Framework" and His Merrie Men
+Playground by Golang With Restful Framework "Gin Web Framework" and His Merrie Men
+
+---
+
+# Using
 
 - Restful Framework
     - [gin-gonic/gin](https://github.com/gin-gonic/gin)
@@ -20,7 +24,7 @@ Playground by Goland With Restful Framework "Gin Web Framework" and His Merrie M
 
 # Maybe Next Time
 
-use Cloudinary (Deploy on Heroku 😥)
+use Cloudinary (Because ... Deploy on Heroku 😥)
 
 ---
 
