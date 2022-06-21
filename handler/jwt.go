@@ -46,7 +46,7 @@ func (h *Handler) JwtRetrieve(c *gin.Context) {
 	}
 
 	if Utils.CheckPasswordHash(user.Password, existUser.Password) {
-		token, _ := generateToken(existUser)
+		token, _ := GenerateToken(existUser)
 		c.JSON(http.StatusOK, gin.H{
 			"token": token,
 		})
@@ -59,7 +59,7 @@ func (h *Handler) JwtRetrieve(c *gin.Context) {
 
 }
 
-func generateToken(user Models.User) (string, error) {
+func GenerateToken(user Models.User) (string, error) {
 	type CustomClaims struct {
 		Account string `json:"account"`
 		jwt.RegisteredClaims
