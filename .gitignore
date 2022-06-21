@@ -102,3 +102,5 @@ export_presets.cfg
 data_*/
 
 .env
+
+/media/
