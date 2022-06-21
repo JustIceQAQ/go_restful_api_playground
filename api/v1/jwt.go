@@ -19,6 +19,11 @@ type LoginUserBody struct {
 	Account  string `json:"account"`
 	Password string `json:"password"`
 }
+type UserInfoBody struct {
+	ID       uint   `json:"id"`
+	Account  string `json:"account"`
+	Username string `json:"username"`
+}
 
 // JwtApp godoc
 // @Summary Get Jwt Token
@@ -76,21 +81,28 @@ func JwtCaptcha(c *gin.Context) {
 	tokenString, _ := getToken(c)
 	isOk, err, tokenDetail := ValidateToken(tokenString, true)
 	fmt.Println(isOk, err, tokenDetail)
+	if !isOk {
+		c.JSON(http.StatusUnauthorized, gin.H{
+			"value": http.StatusText(http.StatusUnauthorized),
+		})
+		return
+	}
 	c.JSON(http.StatusOK, gin.H{
-		"Captcha": tokenDetail,
+		"value": tokenDetail,
 	})
 
 }
 
 type CustomClaims struct {
-	Account string `json:"account"`
+	UserInfoBody
 	jwt.RegisteredClaims
 }
 
 func GenerateToken(user Models.User) (string, error) {
+	userInfo := UserInfoBody{user.ID, user.Account, user.Username}
 
 	claims := CustomClaims{
-		user.Account, jwt.RegisteredClaims{
+		userInfo, jwt.RegisteredClaims{
 			Issuer:    "Go Restful API Demo",
 			Subject:   "Go Restful API Demo",
 			Audience:  nil,
@@ -139,8 +151,8 @@ func ValidateToken(tokenString string, isTokenDetail bool) (bool, error, map[str
 	}
 	if isTokenDetail {
 		dict := map[string]interface{}{
-			"token":   token,
-			"account": claims.Account,
+			"token":     token,
+			"user-info": claims.UserInfoBody,
 		}
 		return true, nil, dict
 	} else {
