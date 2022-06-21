@@ -13,6 +13,17 @@ definitions:
       time.Time:
         type: string
     type: object
+  models.PersonalInformation:
+    properties:
+      createdAt:
+        type: string
+      deletedAt:
+        $ref: '#/definitions/gorm.DeletedAt'
+      id:
+        type: integer
+      updatedAt:
+        type: string
+    type: object
   models.User:
     properties:
       account:
@@ -25,6 +36,8 @@ definitions:
         type: integer
       password:
         type: string
+      personalInformation:
+        $ref: '#/definitions/models.PersonalInformation'
       updatedAt:
         type: string
       username:

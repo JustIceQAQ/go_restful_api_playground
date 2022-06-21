@@ -344,6 +344,23 @@ const docTemplate = `{
                 }
             }
         },
+        "models.PersonalInformation": {
+            "type": "object",
+            "properties": {
+                "createdAt": {
+                    "type": "string"
+                },
+                "deletedAt": {
+                    "$ref": "#/definitions/gorm.DeletedAt"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "updatedAt": {
+                    "type": "string"
+                }
+            }
+        },
         "models.User": {
             "type": "object",
             "properties": {
@@ -361,6 +378,9 @@ const docTemplate = `{
                 },
                 "password": {
                     "type": "string"
+                },
+                "personalInformation": {
+                    "$ref": "#/definitions/models.PersonalInformation"
                 },
                 "updatedAt": {
                     "type": "string"

@@ -33,6 +33,7 @@ func main() {
 func DemoProcess() {
 	demoUser1Password, _ := utils.HashingPassword("admin")
 	_, _ = models.User.Insert(models.User{}, "admin", demoUser1Password, "管理者")
+
 	demoUser2Password, _ := utils.HashingPassword("admin2")
 	_, _ = models.User.Insert(models.User{}, "admin2", demoUser2Password, "管理者2")
 }
