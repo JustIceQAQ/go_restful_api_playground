@@ -7,4 +7,5 @@ RUN cd /src && go build -o app
 FROM alpine
 WORKDIR /app
 COPY --from=build-env /src/app /app/
+ENV GIN_MODE="release"
 ENTRYPOINT ./app
