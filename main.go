@@ -3,8 +3,8 @@ package main
 import (
 	"fmt"
 	_ "github.com/joho/godotenv/autoload"
-	_ "go_restful_api_playground/database"
 	models "go_restful_api_playground/models"
+	"go_restful_api_playground/settings"
 	utils "go_restful_api_playground/utils"
 )
 
@@ -19,7 +19,7 @@ import (
 func main() {
 
 	r := setupRouter()
-	setting(r)
+	settings.Setting(r)
 
 	// Demo Process
 	DemoProcess()

@@ -2,28 +2,23 @@ package database
 
 import (
 	"fmt"
+	Config "go_restful_api_playground/configs"
 	"gorm.io/driver/postgres"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
-	"os"
 )
 
 var Db *gorm.DB
 
 func init() {
 	var err error
-	databaseUrl := os.Getenv("DATABASE_URL")
-	ginMode := os.Getenv("GIN_MODE")
-	if "" == ginMode {
-		ginMode = "debug"
-	}
-
-	if "debug" == ginMode {
-		Db, err = gorm.Open(sqlite.Open(databaseUrl), &gorm.Config{})
+	C := Config.Cfg
+	if "debug" == C.GinMode {
+		Db, err = gorm.Open(sqlite.Open(C.DatabaseUrl), &gorm.Config{})
 		fmt.Println("💬 database Using [sqlite]")
 
-	} else if "release" == ginMode {
-		Db, err = gorm.Open(postgres.Open(databaseUrl), &gorm.Config{})
+	} else if "release" == C.GinMode {
+		Db, err = gorm.Open(postgres.Open(C.DatabaseUrl), &gorm.Config{})
 		fmt.Println("💬 database Using [postgres]")
 	}
 

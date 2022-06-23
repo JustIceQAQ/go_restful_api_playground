@@ -1,4 +1,4 @@
-package main
+package settings
 
 import (
 	orm "go_restful_api_playground/database"
