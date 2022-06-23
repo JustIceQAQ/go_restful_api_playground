@@ -25,7 +25,7 @@ func init() {
 
 	} else if "release" == ginMode {
 		Db, err = gorm.Open(postgres.Open(databaseUrl), &gorm.Config{})
-		fmt.Println(gin.DefaultWriter, "database Using [release]")
+		fmt.Println(gin.DefaultWriter, "database Using [postgres]")
 	}
 
 	if err != nil {
