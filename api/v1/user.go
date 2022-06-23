@@ -43,9 +43,7 @@ func UserRetrieve(c *gin.Context) {
 
 	var user Models.User
 	if result := orm.Db.First(&user, id); result.Error != nil {
-		c.JSON(http.StatusNotFound, gin.H{
-			"message": "Not Found this User by id",
-		})
+		c.JSON(http.StatusBadRequest, gin.H{"message": result.Error.Error()})
 		return
 	}
 
@@ -72,15 +70,14 @@ type UserBody struct {
 func UserCreate(c *gin.Context) {
 	var user Models.User
 	if err := c.BindJSON(&user); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"message": err.Error()})
 		return
 	}
 	if result := orm.Db.Create(&user); result.Error != nil {
-
+		c.JSON(http.StatusBadRequest, gin.H{"message": result.Error.Error()})
 		return
 	}
-
 	c.JSON(http.StatusCreated, &user)
-
 }
 
 // UserApp godoc
@@ -99,11 +96,13 @@ func UserUpdate(c *gin.Context) {
 	id := c.Param("id")
 	var existUser Models.User
 	if result := orm.Db.First(&existUser, id); result.Error != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"message": result.Error.Error()})
 		return
 	}
 
 	var user UserBody
 	if err := c.BindJSON(&user); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"message": err.Error()})
 		return
 	}
 
@@ -133,7 +132,7 @@ func UserDelete(c *gin.Context) {
 
 	if result := orm.Db.Delete(&Models.User{}, id); result.Error != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
-			"error": result.Error.Error(),
+			"message": result.Error.Error(),
 		})
 		return
 	}
