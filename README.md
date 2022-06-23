@@ -19,6 +19,9 @@ Playground by Golang With Restful Framework "Gin Web Framework" and His Merrie M
 - Deploy to Docker
     - [Golang - Official Image | Docker Hub](https://hub.docker.com/_/golang)
     - [Build your Go image | Docker Documentation](https://docs.docker.com/language/golang/build-images/#multi-stage-builds)
+- Deploy to Heroku
+  - Static Files
+    - [Image and Video Upload, Storage, Optimization and CDN](https://cloudinary.com/)
 
 ---
 
