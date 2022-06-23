@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
@@ -20,6 +21,8 @@ func setting(app *gin.Engine) {
 	err := godotenv.Load(".env." + ginMode)
 	if err != nil {
 	}
+
+	fmt.Println(gin.DefaultWriter, "Now API is ", ginMode, " Mode")
 
 	docs.SwaggerInfo.BasePath = "/api/v1"
 	app.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
