@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	_ "github.com/joho/godotenv/autoload"
 	_ "go_restful_api_playground/database"
 	models "go_restful_api_playground/models"
 	utils "go_restful_api_playground/utils"
