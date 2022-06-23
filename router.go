@@ -54,8 +54,9 @@ func UsersRouter(superRoute *gin.RouterGroup) {
 func UploadsRouter(superRoute *gin.RouterGroup) {
 	// uploadsRouter.Use(v1.VerifyToken)
 
-	uploadsRouter := superRoute.Group("/upload")
+	uploadsRouter := superRoute.Group("/files")
 	{
+		uploadsRouter.GET("/", v1.FileList)
 		uploadsRouter.POST("/", v1.UploadFile)
 	}
 }
