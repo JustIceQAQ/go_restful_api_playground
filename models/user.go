@@ -30,7 +30,7 @@ func (User) Insert(account string, password string, username string) (*User, err
 	}
 
 	if res := orm.Db.Create(&user); res.Error != nil {
-		return nil, res.Error
+		return nil, nil
 	}
 	return &user, nil
 }
