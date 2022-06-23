@@ -11,6 +11,17 @@ import (
 	"time"
 )
 
+var Cld *cloudinary.Cloudinary
+
+func init() {
+	//create cloudinary instance
+	Cld, _ = cloudinary.NewFromParams(
+		config.Cfg.Cloudinary.CloudName,
+		config.Cfg.Cloudinary.ApiKey,
+		config.Cfg.Cloudinary.ApiSecret,
+	)
+}
+
 var FUH = FileUploadHelper{}
 
 type FileUploadHelper struct {
@@ -34,18 +45,8 @@ func (fmh *FileUploadHelper) ToCloudinary(input interface{}) (string, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
-	//create cloudinary instance
-	cld, err := cloudinary.NewFromParams(
-		config.Cfg.Cloudinary.CloudName,
-		config.Cfg.Cloudinary.ApiKey,
-		config.Cfg.Cloudinary.ApiSecret,
-	)
-	if err != nil {
-		return "", err
-	}
-
 	//upload file
-	uploadParam, err := cld.Upload.Upload(ctx, input, uploader.UploadParams{Folder: config.Cfg.Cloudinary.UploadFolder})
+	uploadParam, err := Cld.Upload.Upload(ctx, input, uploader.UploadParams{Folder: config.Cfg.Cloudinary.UploadFolder})
 	if err != nil {
 		return "", err
 	}
