@@ -34,7 +34,7 @@ func FilePathFix(c *gin.Context) string {
 // @Accept json
 // @Produce json
 // @Success 200 {array} Models.File
-// @Router /files [get]
+// @Router /files/ [get]
 // @Security BearerAuth
 func FileList(c *gin.Context) {
 	var files []Models.File
@@ -64,7 +64,7 @@ func FileList(c *gin.Context) {
 // @Param file formData file true "file"
 // @Param filename formData string true "filename"
 // @Success 200 {string} string "{"message": "Your Upload Success"}"
-// @Router /files [post]
+// @Router /files/ [post]
 // @Security BearerAuth
 func UploadFile(c *gin.Context) {
 	var uploadUrl string
