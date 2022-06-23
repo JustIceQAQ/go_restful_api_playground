@@ -25,6 +25,8 @@ definitions:
         type: integer
       updatedAt:
         type: string
+      uri:
+        type: string
       userid:
         type: integer
     type: object
@@ -67,6 +69,9 @@ definitions:
         type: string
       username:
         type: string
+    required:
+    - account
+    - password
     type: object
   v1.CustomClaims:
     properties:
@@ -121,6 +126,52 @@ info:
   title: Demo GO Restful API
   version: 0.0.1
 paths:
+  /files:
+    get:
+      consumes:
+      - application/json
+      description: GET List Files
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.File'
+            type: array
+      security:
+      - BearerAuth: []
+      summary: List Files
+      tags:
+      - Upload
+    post:
+      consumes:
+      - multipart/form-data
+      description: Create Upload File
+      parameters:
+      - description: file
+        in: formData
+        name: file
+        required: true
+        type: file
+      - description: filename
+        in: formData
+        name: filename
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"message": "Your Upload Success"}'
+          schema:
+            type: string
+      security:
+      - BearerAuth: []
+      summary: Create Upload File
+      tags:
+      - Upload
   /jwt/captcha:
     get:
       consumes:
@@ -175,29 +226,6 @@ paths:
       summary: Ping example
       tags:
       - Ping
-  /upload:
-    post:
-      consumes:
-      - multipart/form-data
-      description: Create Upload File
-      parameters:
-      - description: file
-        in: formData
-        name: file
-        required: true
-        type: file
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: '{"message": "Your Upload Success"}'
-          schema:
-            type: string
-      security:
-      - BearerAuth: []
-      summary: Create Upload File
-      tags:
-      - Upload
   /user/{id}:
     delete:
       consumes:
