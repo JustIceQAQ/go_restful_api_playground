@@ -11,8 +11,8 @@ var Db *gorm.DB
 func init() {
 
 	var err error
-	dbDns := os.Getenv("DB_DNS")
-	Db, err = gorm.Open(sqlite.Open(dbDns), &gorm.Config{})
+	databaseUrl := os.Getenv("DATABASE_URL")
+	Db, err = gorm.Open(sqlite.Open(databaseUrl), &gorm.Config{})
 	if err != nil {
 		panic(err)
 	}
