@@ -104,3 +104,4 @@ data_*/
 .env
 
 /media/
+db.sqlite
