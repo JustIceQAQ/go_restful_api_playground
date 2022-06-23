@@ -2,7 +2,6 @@ package database
 
 import (
 	"fmt"
-	"github.com/gin-gonic/gin"
 	"gorm.io/driver/postgres"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
@@ -21,11 +20,11 @@ func init() {
 
 	if "debug" == ginMode {
 		Db, err = gorm.Open(sqlite.Open(databaseUrl), &gorm.Config{})
-		fmt.Println(gin.DefaultWriter, "database Using [sqlite]")
+		fmt.Println("💬 database Using [sqlite]")
 
 	} else if "release" == ginMode {
 		Db, err = gorm.Open(postgres.Open(databaseUrl), &gorm.Config{})
-		fmt.Println(gin.DefaultWriter, "database Using [postgres]")
+		fmt.Println("💬 database Using [postgres]")
 	}
 
 	if err != nil {

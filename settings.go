@@ -22,7 +22,7 @@ func setting(app *gin.Engine) {
 	if err != nil {
 	}
 
-	fmt.Println(gin.DefaultWriter, "Now API is ", ginMode, " Mode")
+	fmt.Println("💬 Now API is", ginMode, "Mode")
 
 	docs.SwaggerInfo.BasePath = "/api/v1"
 	app.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
