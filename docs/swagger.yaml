@@ -126,7 +126,7 @@ info:
   title: Demo GO Restful API
   version: 0.0.1
 paths:
-  /files:
+  /files/:
     get:
       consumes:
       - application/json
