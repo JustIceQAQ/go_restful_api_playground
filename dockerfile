@@ -1,11 +1,11 @@
-# build stage
-FROM golang AS build-env
-ADD . /src
-RUN cd /src && go build -o app
-
-# final stage
-FROM alpine
+FROM golang
 WORKDIR /app
-COPY --from=build-env /src/app /app/
-ENV GIN_MODE="release"
-ENTRYPOINT ./app
+COPY go.mod ./
+COPY go.sum ./
+RUN go mod download
+COPY . ./
+RUN go build -o /docker-go-api
+EXPOSE 8080
+CMD [ "/docker-go-api" ]
+
+
